@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="plugin" version="3.0" group="content" method="upgrade">
+<extension type="plugin" version="2.5" group="content" method="upgrade">
     <name>PLG_EASYKEYWORDSITEMAP</name>
-    <version>3-3</version>
-    <creationDate>2014-07-17</creationDate>
-    <license>http://www.gnu.org/licenses/gpl-3.0</license>
-    <copyright>Copyright 2014 Viktor Vogel. All rights reserved.</copyright>
+    <version>2.5-4</version>
+    <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
     <author>Viktor Vogel</author>
-    <authoremail>admin@kubik-rubik.de</authoremail>
-    <authorurl>http://joomla-extensions.kubik-rubik.de/</authorurl>
+    <authorEmail>admin@kubik-rubik.de</authorEmail>
+    <authorUrl>http://www.kubik-rubik.de</authorUrl>
+    <copyright>Copyright 2013 Viktor Vogel. All rights reserved.</copyright>
+    <creationDate>2013-07-01</creationDate>
     <description>PLG_EASYKEYWORDSITEMAP_XML_DESCRIPTION</description>
     <files>
         <filename plugin="easykeywordsitemap">easykeywordsitemap.php</filename>
@@ -22,17 +22,15 @@
     </languages>
     <config>
         <fields name="params" addfieldpath="/plugins/content/easykeywordsitemap/fields">
-            <fieldset name="settings">
+            <fieldset name="basic">
                 <field type="krdonationcodecheck" />
-                <field type="krtitle" name="spacer_nosettings" class="text" label="PLG_EASYKEYWORDSITEMAP_SPACER_NOSETTINGS" />
+                <field type="krversioncheck" name="krversioncheck" default="eks|2.5-4" />
+                <field type="spacer" name="spacer_nosettings" class="text" label="PLG_EASYKEYWORDSITEMAP_SPACER_NOSETTINGS" />
             </fieldset>
             <fieldset name="donation">
-                <field type="krdonationcodecheck" />
                 <field name="donation_code" type="text" default="" size="40" label="KR_DONATION_CODE" description="KR_DONATION_CODEDESC" />
             </fieldset>
             <fieldset name="versioncheck">
-                <field type="krdonationcodecheck" />
-                <field type="krversioncheck" name="krversioncheck" default="eks|3-3" />
                 <field name="versioncheck_enable" type="list" default="1" label="KR_VERSION_CHECK" description="KR_VERSION_CHECKDESC">
                     <option value="1">KR_VERSION_CHECK_ONCESESSION</option>
                     <option value="2">KR_VERSION_CHECK_ONEVERYLOAD</option>

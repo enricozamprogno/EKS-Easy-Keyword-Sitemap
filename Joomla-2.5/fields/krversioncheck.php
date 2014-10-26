@@ -3,8 +3,8 @@
  * @Copyright
  * @package     Field - Kubik-Rubik Versioncheck
  * @author      Viktor Vogel {@link http://www.kubik-rubik.de}
- * @version     Joomla! 3 - 1.4
- * @date        Created on 2013-08-29
+ * @version     Joomla! 2.5 - 1.2
+ * @date        Created on 22-Feb-2013
  * @link        Project Site {@link http://joomla-extensions.kubik-rubik.de}
  *
  * @license GNU/GPL
@@ -35,27 +35,11 @@ class JFormFieldKRVersionCheck extends JFormField
     {
         $field_set = $this->form->getFieldset();
 
-        if(empty($this->group))
-        {
-            $version_check_enabled = $field_set['jform_versioncheck_enable']->value;
-        }
-        elseif($this->group == 'params')
-        {
-            $version_check_enabled = $field_set['jform_params_versioncheck_enable']->value;
-        }
+        $version_check_enabled = $field_set['jform_params_versioncheck_enable']->value;
 
         if(!empty($version_check_enabled))
         {
-            if(empty($this->group))
-            {
-                $version_check_data = $field_set['jform_krversioncheck']->value;
-            }
-            elseif($this->group == 'params')
-            {
-                $version_check_data = $field_set['jform_params_krversioncheck']->value;
-            }
-
-            $info = explode('|', $version_check_data);
+            $info = explode('|', $field_set['jform_params_krversioncheck']->value);
             $extension = $info[0];
             $version_installed = $info[1];
 
@@ -78,23 +62,23 @@ class JFormFieldKRVersionCheck extends JFormField
 
             if($version_check['status'] == 1)
             {
-                $field_value = '<div style="border: 1px solid #DD87A2; border-radius: 2px; padding: 5px; background-color: #F9CAD9; font-size: 120%; margin: 4px 0 4px -180px;">'.JTEXT::sprintf('KR_VERSION_CHECK_NEWUPDATEAVAILABLE', $version_check['version_latest'], $version_check['url'], $version_check['name']).'</div>';
+                $field_value = '<div style="border: 1px solid #DD87A2; border-radius: 2px; padding: 5px; background-color: #F9CAD9; font-size: 120%; margin: 10px 0;">'.JTEXT::sprintf('KR_VERSION_CHECK_NEWUPDATEAVAILABLE', $version_check['version_latest'], $version_check['url'], $version_check['name']).'</div>';
             }
             elseif($version_check['status'] == 0)
             {
-                $field_value = '<div style="border: 1px solid #87DB93; border-radius: 2px; padding: 5px; background-color: #CBF7CA; font-size: 120%; margin: 4px 0 4px -180px;">'.JTEXT::_('KR_VERSION_CHECK_UPTODATE').'</div>';
+                $field_value = '<div style="border: 1px solid #87DB93; border-radius: 2px; padding: 5px; background-color: #CBF7CA; font-size: 120%; margin: 10px 0;">'.JTEXT::_('KR_VERSION_CHECK_UPTODATE').'</div>';
             }
             elseif($version_check['status'] == -1)
             {
-                $field_value .= '<div style="border: 1px solid #F2DB82; border-radius: 2px; padding: 5px; background-color: #F7EECA; font-size: 120%; margin: 4px 0 4px -180px;">'.JTEXT::_('KR_VERSION_CHECK_CHECK_ERROR_SERVER').'</div>';
+                $field_value .= '<div style="border: 1px solid #F2DB82; border-radius: 2px; padding: 5px; background-color: #F7EECA; font-size: 120%; margin: 10px 0;">'.JTEXT::_('KR_VERSION_CHECK_CHECK_ERROR_SERVER').'</div>';
             }
             elseif($version_check['status'] == -2)
             {
-                $field_value .= '<div style="border: 1px solid #F2DB82; border-radius: 2px; padding: 5px; background-color: #F7EECA; font-size: 120%; margin: 4px 0 4px -180px;">'.JTEXT::_('KR_VERSION_CHECK_CHECK_ERROR').'</div>';
+                $field_value .= '<div style="border: 1px solid #F2DB82; border-radius: 2px; padding: 5px; background-color: #F7EECA; font-size: 120%; margin: 10px 0;">'.JTEXT::_('KR_VERSION_CHECK_CHECK_ERROR').'</div>';
             }
             elseif($version_check['status'] == -3)
             {
-                $field_value .= '<div style="border: 1px solid #F2DB82; border-radius: 2px; padding: 5px; background-color: #F7EECA; font-size: 120%; margin: 4px 0 4px -180px;">'.JTEXT::sprintf('KR_VERSION_CHECK_CHECK_JOOMLA_VERSION', $version_check['joomla_version']).'</div>';
+                $field_value .= '<div style="border: 1px solid #F2DB82; border-radius: 2px; padding: 5px; background-color: #F7EECA; font-size: 120%; margin: 10px 0;">'.JTEXT::sprintf('KR_VERSION_CHECK_CHECK_JOOMLA_VERSION', $version_check['joomla_version']).'</div>';
             }
 
             if($version_check_enabled == 1)
@@ -117,7 +101,6 @@ class JFormFieldKRVersionCheck extends JFormField
     {
         $version_check = array('status' => 0, 'name' => '', 'url' => '', 'version_latest' => '', 'joomla_version' => '');
 
-        // TODO - Use JHttpFactory::getHttp(); fo request
         $url_fopen = ini_get('allow_url_fopen');
 
         if(function_exists('curl_init') OR !empty($url_fopen))
@@ -160,8 +143,8 @@ class JFormFieldKRVersionCheck extends JFormField
             if(!preg_match('@(error|access denied)@i', $version_check_xml))
             {
                 $jversion = new JVersion;
-                $version_check['joomla_version'] = substr($jversion->RELEASE, 0, strpos($jversion->RELEASE, '.'));
-                $joomla_version = 'joomlaversion'.$version_check['joomla_version'];
+                $version_check['joomla_version'] = $jversion->RELEASE;
+                $joomla_version = 'joomlaversion'.str_replace('.', '', $version_check['joomla_version']);
                 $type = $info[0];
 
                 if(class_exists('SimpleXMLElement'))
