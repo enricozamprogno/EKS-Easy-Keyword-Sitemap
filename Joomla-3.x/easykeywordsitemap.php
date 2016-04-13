@@ -139,8 +139,8 @@ class PlgContentEasyKeywordSitemap extends JPlugin
 
                             if(in_array($keyword_first_char, $alpha_index[1]))
                             {
-                                $html .= '<a class="alpha_anchor" id="eks_'.utf8_strtolower($keyword_first_char).'_'.$count_match.'">'
-                                        .'<span class="first_letter">'.utf8_strtoupper($keyword_first_char).'</span></a>';
+                                $html .= '<div class="alpha_anchor"><a class="first_letter" id="eks_'.utf8_strtolower($keyword_first_char).'_'.$count_match.'">'
+                                        .utf8_strtoupper($keyword_first_char).'</a></div>';
 
                                 $alpha_index_key = array_search($keyword_first_char, $alpha_index[1]);
                                 unset($alpha_index[1][$alpha_index_key]);
