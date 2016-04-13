@@ -139,14 +139,15 @@ class PlgContentEasyKeywordSitemap extends JPlugin
 
                             if(in_array($keyword_first_char, $alpha_index[1]))
                             {
-                                $html .= '<a id="eks_'.utf8_strtolower($keyword_first_char).'_'.$count_match.'"></a>';
+                                $html .= '<a class="alpha_anchor" id="eks_'.utf8_strtolower($keyword_first_char).'_'.$count_match.'">'
+                                        .'<span class="first_letter">'.utf8_strtoupper($keyword_first_char).'</span></a>';
 
                                 $alpha_index_key = array_search($keyword_first_char, $alpha_index[1]);
                                 unset($alpha_index[1][$alpha_index_key]);
                             }
                         }
-
-                        $html .= '<h2>'.$keyword.'</h2>';
+                        
+                        $html .= '<div class="eks_kw_block"><h2>'.$keyword.'</h2>';
                         $html .= '<ul>';
 
                         foreach($output_values as $output_value)
@@ -161,7 +162,7 @@ class PlgContentEasyKeywordSitemap extends JPlugin
                             $html .= '</li>';
                         }
 
-                        $html .= '</ul>';
+                        $html .= '</ul></div>';
                     }
                 }
                 else
