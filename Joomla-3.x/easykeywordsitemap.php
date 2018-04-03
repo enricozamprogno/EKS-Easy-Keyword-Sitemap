@@ -133,6 +133,7 @@ class PlgContentEasyKeywordSitemap extends JPlugin
 
                     foreach($output_data as $keyword => $output_values)
                     {
+                        usort ( $output_values, function($a, $b) { return strcasecmp($a->title, $b->title); } );
                         if(!empty($alpha_index[1]))
                         {
                             $keyword_first_char = $this->firstCharAlphaIndex($keyword);
